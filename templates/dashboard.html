@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fc;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        textarea {
+            width: 100%;
+            height: 120px;
+            padding: 12px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .saved-data {
+            margin-top: 30px;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .saved-data pre {
+            background: #e0e0e0;
+            padding: 15px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #555;
+        }
+
+        .error {
+            color: #d9534f;
+        }
+
+        .success {
+            color: #5bc0de;
+        }
+
+        .message {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .logout-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .logout-link a {
+            text-decoration: none;
+            color: #d9534f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Welcome, {{ username }}!</h2>
+
+        <!-- Success/Error Message -->
+        {% if message %}
+        <div class="message {% if message_type == 'error' %}error{% else %}success{% endif %}">
+            {{ message }}
+        </div>
+        {% endif %}
+
+        <!-- Data Entry Form -->
+        <form method="post">
+            <h3>Write and Save Your Notes:</h3>
+            <textarea name="data" placeholder="Type your notes here..." required></textarea>
+            <button type="submit">Save Data</button>
+        </form>
+
+        <!-- Display Saved Data -->
+        {% if saved_data %}
+        <div class="saved-data">
+            <h3>Your Saved Data:</h3>
+            <pre>{{ saved_data }}</pre>
+            <form method="post" action="/delete_data">
+                <button type="submit">Delete All Saved Data</button>
+            </form>
+        </div>
+        {% endif %}
+
+        <div class="logout-link">
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+</body>
+</html>
